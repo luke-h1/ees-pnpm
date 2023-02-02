@@ -80,6 +80,9 @@ const nextConfig = {
       }
     }
 
+    // symlinks
+    config.resolve.symlinks = true;
+
     config.resolve.alias = {
       ...config.resolve.alias,
       './dist/cpexcel.js': false,
@@ -94,12 +97,7 @@ const nextConfig = {
 // Plugins are applied to the
 // Next config from left to right
 module.exports = flowRight(
-  withTranspileModules(
-    process.env.NEXT_CONFIG_MODE !== 'server'
-      ? ['explore-education-statistics-common']
-      : [],
-    {
-      resolveSymlinks: true,
-    },
-  ),
+  withTranspileModules(['explore-education-statistics-common'], {
+    resolveSymlinks: true,
+  }),
 )(nextConfig);
