@@ -94,6 +94,10 @@ const nextConfig = {
   },
 };
 
-module.exports = withTranspileModules(['explore-education-statistics-common'], {
-  resolveSymlinks: true,
-})(nextConfig);
+// Plugins are applied to the
+// Next config from left to right
+module.exports = flowRight(
+  withTranspileModules(['explore-education-statistics-common'], {
+    resolveSymlinks: true,
+  }),
+)(nextConfig);
