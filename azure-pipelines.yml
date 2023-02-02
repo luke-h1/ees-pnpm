@@ -1,0 +1,62 @@
+variables:
+  BuildConfiguration: 'Release'
+  CI: true
+  PNPM_VERSION: 7.26.0
+  NODE_VERSION: 16.14.2
+  DOTNET_VERSION: 6.0.x
+
+trigger:
+  branches:
+    include:
+      - main
+      - dev
+
+pr: [ 'main', 'dev' ]
+
+jobs:
+  - job: 'Frontend'
+    pool:
+      vmImage: 'ubuntu-20.04'
+      demands: azureps
+
+    steps:
+      - task: NodeTool@0
+        displayName: 'Install Node.js $(NODE_VERSION)'
+        inputs:
+          versionSpec: $(NODE_VERSION)
+
+      - task: 'Bash@3'
+        displayName: 'Install PNPM'
+        inputs:
+          targetType: 'inline'
+          script: 'npm i -g pnpm@$(PNPM_VERSION)'
+
+      - task: 'Bash@3'
+        displayName: 'pnpm i'
+        inputs:
+          targetType: 'inline'
+          script: 'pnpm i'
+
+      - task: 'Bash@3'
+        displayName: 'pnpm build'
+        inputs:
+          targetType: 'inline'
+          script: 'pnpm --filter=explore-education-statistics-frontend build'
+
+      - task: 'Bash@3'
+        displayName: 'pnpm deploy'
+        inputs:
+          targetType: 'inline'
+          script: 'pnpm --filter=explore-education-statistics-frontend --prod deploy dist/public-frontend --shamefully-hoist'
+
+      - task: Bash@3
+        displayName: 'Zip public frontend'
+        inputs:
+          targetType: 'inline'
+          script: 'cd dist/public-frontend && zip -r -y $(Build.ArtifactStagingDirectory)/public-frontend.zip *'
+
+      - task: PublishPipelineArtifact@0
+        displayName: 'Publish frontend artifact'
+        inputs:
+          artifactName: 'public-frontend'
+          targetPath: '$(Build.ArtifactStagingDirectory)'
