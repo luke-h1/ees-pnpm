@@ -4,6 +4,7 @@ variables:
   PNPM_VERSION: 7.26.0
   NODE_VERSION: 16.14.2
   DOTNET_VERSION: 6.0.x
+  pool: Azure Pipelines
 
 trigger:
   branches:
