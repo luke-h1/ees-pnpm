@@ -102,7 +102,7 @@ module.exports = flowRight(
     // process.env.NEXT_CONFIG_MODE !== 'server'
     //   ? ['explore-education-statistics-common']
     //   : [],
-    'explore-education-statistics-common',
+    ['explore-education-statistics-common'],
     {
       resolveSymlinks: true,
     },
