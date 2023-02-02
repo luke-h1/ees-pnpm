@@ -49,11 +49,14 @@ jobs:
       - name: pnpm deploy frontend
         run: pnpm --filter=explore-education-statistics-frontend deploy --prod public-frontend
 
+      - name: zip frontend
+        run: zip -r -y public-frontend.zip public-frontend
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: node-app
-          path: public-frontend
+          path: public-frontend.zip
 
   deploy:
     runs-on: ubuntu-latest
