@@ -95,14 +95,9 @@ const nextConfig = {
 // Next config from left to right
 module.exports = flowRight(
   withTranspileModules(
-    // // Need to modify the following as next-transpile-modules
-    // // throws when running server in a production environment
-    // // because we remove the target modules as part
-    // // of the build to reduce total artifact size.
-    // process.env.NEXT_CONFIG_MODE !== 'server'
-    //   ? ['explore-education-statistics-common']
-    //   : [],
-    ['explore-education-statistics-common'],
+    process.env.NEXT_CONFIG_MODE !== 'server'
+      ? ['explore-education-statistics-common']
+      : [],
     {
       resolveSymlinks: true,
     },
