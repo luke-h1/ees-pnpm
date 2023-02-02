@@ -42,7 +42,6 @@ jobs:
       - name: Install dependencies
         run: pnpm i --no-frozen-lockfile
 
-
       - name: Build frontend 
         run: pnpm --filter=explore-education-statistics-frontend build
 
@@ -50,7 +49,7 @@ jobs:
         run: pnpm --filter=explore-education-statistics-frontend deploy --prod public-frontend
 
       - name: zip frontend
-        run: zip -r -y public-frontend.zip public-frontend
+        run: cd public-frontend && zip -r -y public-frontend.zip *
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
@@ -78,4 +77,4 @@ jobs:
           app-name: 'ees-pnpm-rc'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_C689B1B07EA5496C9B4AA8D4E6654475 }}
-          package: .
+          package: public-frontend.zip
