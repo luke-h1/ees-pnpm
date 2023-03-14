@@ -133,7 +133,7 @@
     "webpack-manifest-plugin": "^4.0.2",
     "whatwg-fetch": "^3.4.1",
     "workbox-webpack-plugin": "^6.4.1",
-    "yup": "^0.29.3"
+    "yup": "^0.32.11"
   },
   "scripts": {
     "start": "node scripts/start.js",
